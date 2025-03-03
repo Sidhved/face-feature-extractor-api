@@ -53,7 +53,7 @@ The service uses dlib's 68-point facial landmark detector to identify key facial
 
 3. Install dependencies:
    ```bash
-   pip install -r facial_feature_api_dlib/requirements.txt
+   pip install -r requirements.txt
    ```
 
 4. Download the shape predictor model:
@@ -67,7 +67,6 @@ The service uses dlib's 68-point facial landmark detector to identify key facial
 ### Starting the API
 
 ```bash
-cd facial_feature_api_dlib
 uvicorn app.main:app --reload
 ```
 
@@ -91,7 +90,7 @@ curl -X POST "http://localhost:8000/api/v1/landmarks/detect" \
 
 ## Project Structure
 
-facial_feature_api_dlib/
+facial-feature-extractor-api/
 ├── app/
 │ ├── api/ # API routes and endpoints
 │ ├── core/ # Core configurations and settings
@@ -113,7 +112,7 @@ facial_feature_api_dlib/
 Run the test suite with:
 
 ```bash
-pytest facial_feature_api_dlib/tests
+pytest tests
 ```
 
 ## Configuration
