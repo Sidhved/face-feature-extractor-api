@@ -1,8 +1,8 @@
-schemaVersion: 1.0
-type: component
-buildPack: docker
+schemaVersion: 1.1
+type: service
 name: facial-feature-extractor-api
 description: "A FastAPI service for extracting facial landmarks from images using dlib"
+buildPack: docker
 
 build:
   env:
