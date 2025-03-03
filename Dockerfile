@@ -20,7 +20,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code
-COPY  .
+COPY  . .
 
 # Create directories for logs and results
 RUN mkdir -p logs results
