@@ -30,7 +30,7 @@ RUN mkdir -p logs results
 RUN curl -L "http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2" | bunzip2 > shape_predictor_68_face_landmarks.dat
 
 # Create a non-root user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+RUN groupadd -r appuser --gid 10001 && useradd --uid 10001 -r -g appuser appuser
 
 # Set ownership and permissions
 RUN chown -R appuser:appuser /app
