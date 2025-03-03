@@ -1,0 +1,14 @@
+# Choreo configuration file
+version: 1.0.0
+type: service
+build:
+  buildpack: docker
+deploy:
+  healthCheck:
+    port: 8000
+    path: /health
+  env:
+    - name: LOG_LEVEL
+      value: "INFO"
+    - name: RATE_LIMIT
+      value: "100" 
