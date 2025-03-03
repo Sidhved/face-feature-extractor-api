@@ -1,7 +1,69 @@
 schemaVersion: 1.0
-# Endpoint configuration
-endpoints:
-  - name: facial-feature-extractor-endpoint
-    service:
-      port: 8000
-    type: REST
+type: component
+buildPack: docker
+name: facial-feature-extractor-api
+description: "A FastAPI service for extracting facial landmarks from images using dlib"
+
+build:
+  env:
+    - name: PYTHON_VERSION
+      value: "3.10"
+
+deploy:
+  resources:
+    cpu: 1.0
+    memory: 2Gi
+  
+  container:
+    port: 8000
+    env:
+      - name: LOG_LEVEL
+        value: "INFO"
+      - name: RATE_LIMIT
+        value: "100"
+      - name: PROJECT_NAME
+        value: "Facial Feature Extractor API"
+      - name: API_V1_STR
+        value: "/api/v1"
+  
+  healthCheck:
+    port: 8000
+    path: /health
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    metrics:
+      cpu:
+        targetAverageUtilization: 80
+
+api:
+  basePath: /
+  cors:
+    enabled: true
+    accessControlAllowOrigins:
+      - "*"
+    accessControlAllowCredentials: false
+    accessControlAllowHeaders:
+      - "authorization"
+      - "content-type"
+    accessControlAllowMethods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "OPTIONS"
+
+observability:
+  metrics:
+    enabled: true
+  logging:
+    enabled: true
+  tracing:
+    enabled: true
