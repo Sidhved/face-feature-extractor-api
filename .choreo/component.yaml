@@ -43,6 +43,43 @@ deploy:
       cpu:
         targetAverageUtilization: 80
 
+endpoints:
+  - name: health-endpoint
+    context: /health
+    service:
+      port: 8000
+    type: REST
+    
+  - name: docs-endpoint
+    context: /docs
+    service:
+      port: 8000
+    type: REST
+
+  - name: redoc-endpoint
+    context: /redoc
+    service:
+      port: 8000
+    type: REST
+    
+  - name: landmarks-upload-endpoint
+    context: /api/v1/landmarks/detect/upload
+    service:
+      port: 8000
+    type: REST
+    
+  - name: landmarks-url-endpoint
+    context: /api/v1/landmarks/detect/url
+    service:
+      port: 8000
+    type: REST
+    
+  - name: root-endpoint
+    context: /
+    service:
+      port: 8000
+    type: REST
+
 api:
   basePath: /
   cors:
