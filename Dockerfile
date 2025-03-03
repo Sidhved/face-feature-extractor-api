@@ -2,7 +2,7 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# Install system dependencies required for dlib
+# Install system dependencies required for dlib and curl for downloading
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     liblapack-dev \
     libx11-dev \
     libgtk-3-dev \
+    curl \
+    bzip2 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
