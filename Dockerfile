@@ -26,18 +26,18 @@ COPY . .
 RUN mkdir -p logs results
 
 # Download the shape predictor model if not included in the repository
-# Uncomment if you need to download the model during build
 RUN curl -L "http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2" | bunzip2 > shape_predictor_68_face_landmarks.dat
 
-# Create a non-root user
-RUN groupadd -r appuser --gid 10001 && useradd --uid 10001 -r -g appuser appuser
+# Create non-root user with explicit UID/GID in the required range
+RUN groupadd -g 10001 appuser && \
+    useradd -u 10001 -g appuser -s /bin/bash -m appuser
 
 # Set ownership and permissions
-RUN chown -R appuser:appuser /app
+RUN chown -R appuser:appuser /app /home/appuser
 RUN chmod -R 755 /app
 
-# Switch to non-root user
-USER appuser
+# Explicitly set the USER directive with the UID
+USER 10001
 
 # Expose the port the app runs on
 EXPOSE 8000
