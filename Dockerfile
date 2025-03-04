@@ -28,13 +28,17 @@ COPY . .
 RUN mkdir -p logs results
 
 # Download the shape predictor model if not included in the repository
-RUN curl -L "http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2" | bunzip2 > shape_predictor_68_face_landmarks.dat
+RUN curl -L -c cookies.txt "https://drive.google.com/uc?export=download&id=1A9g08oIQAEaxOshvMc6Hb6DPX6RQ-JiX" > confirmation.html && \
+    CONFIRM=$(cat confirmation.html | grep -o 'confirm=[^&]*' | cut -d'=' -f2) && \
+    curl -L -b cookies.txt "https://drive.google.com/uc?export=download&id=1A9g08oIQAEaxOshvMc6Hb6DPX6RQ-JiX" -o shape_predictor_68_face_landmarks.dat && \
+    rm cookies.txt confirmation.html
 
 # Create non-root user with explicit UID/GID in the required range
 RUN groupadd -g 10001 appuser && \
     useradd -u 10001 -g appuser -s /bin/bash -m appuser
 
 # Set ownership and permissions
+RUN chown appuser:appuser /app/shape_predictor_68_face_landmarks.dat
 RUN chown -R appuser:appuser /app /home/appuser
 RUN chmod -R 755 /app
 
